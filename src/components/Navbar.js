@@ -7,7 +7,7 @@ function Navbar() {
             <NavLink 
                 to="/" 
                 className={({ isActive }) => 
-                    isActive ? 'mb-4 bg-slate-700 p-2 rounded text-white' : 'p-2 text-slate-300'
+                    isActive ? 'bg-slate-700 p-2 rounded text-white' : 'p-2 text-slate-300'
                 }
             >
                 Home

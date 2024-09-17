@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
+import { CiEdit } from "react-icons/ci";
 
 // EditUser component for displaying a form to edit an existing user
 function EditUser({ id, user, updateUser }) {
@@ -24,7 +25,8 @@ function EditUser({ id, user, updateUser }) {
                 className='bg-slate-700 hover:bg-slate-800 text-white font-bold py-2 px-4 rounded' 
                 onClick={() => setShowEditUser(true)}
             >
-                Edit
+                <span className="hidden sm:block">Edit</span>
+                <CiEdit className="block sm:hidden" />
             </button>
 
             {/* Conditionally render the edit user form */}

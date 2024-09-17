@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import User from './User';
 import AddUser from './AddUser';
+import UserTable from './UserTable';
 
 function Users() {
     const [users, setUsers] = useState([]); // State to store users
@@ -20,13 +21,12 @@ function Users() {
 
         try {
             const res = await axios.get('https://jsonplaceholder.typicode.com/users');
-            setUsers(res.data); // Set users data from the response
-            console.log(res.data); // Optional: log the fetched data
+            setUsers(res.data);
         } catch (err) {
-            setError('Failed to fetch users.'); // Set error message if request fails
-            console.log(err); // Log error for debugging
+            setError('Failed to fetch users.');
+            console.log(err); 
         } finally {
-            setLoading(false); // Set loading to false after fetching data
+            setLoading(false);
         }
     };
 
@@ -124,36 +124,48 @@ function Users() {
 
                 {/* User list container */}
                 <div className='w-full h-full overflow-y-auto mt-5'>
-                    <ul className='p-1 lg:p-5 overflow-y-auto'>
-                        {
-                            loading ? (
-                                <div className='flex justify-center items-center gap-5'>
-                                    <p className='text-slate-400'>Loading...</p>
-                                    {/* Spinner component for loading state */}
-                                    <div className='spinner'></div>
-                                </div>
-                            ) : error ? (
-                                <div className='flex justify-center items-center gap-5'>
-                                    <p className='text-red-500'>{error}</p> {/* Display error message if there's an error */}
-                                </div>
-                            ) : (
-                                <div>
-                                    {/* Table header, hidden on small screens */}
-                                    <div className='hidden md:flex items-center mb-5 bg-slate-400 border-b-2 border-slate-600 py-2 px-5 rounded-sm'>
-                                        <h4 className='w-1/3 font-semibold'>Name</h4>
-                                        <h4 className='w-1/3 font-semibold'>Email</h4>
-                                        <h4 className='w-1/3 font-semibold'>Phone</h4>
+                    
+                    <table className="w-full text-center">
+                
+                        <thead className="bg-slate-400 text-white">
+                            <tr className="h-12">
+                                <th className="px-4 py-2">Name</th>
+                                <th className="px-4 py-2">Email</th>
+                                <th className="px-4 py-2">Phone</th>
+                                <th className="px-4 py-2"></th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {
+                                loading ? (
+                                <tr>
+                                    <td colSpan="4"> {/* Adjust colSpan according to the number of columns */}
+                                    <div className='flex flex-col justify-center items-center gap-5'>
+                                        {/* Spinner component for loading state */}
+                                        <div className='spinner'></div>
+                                        <p className='text-slate-400'>Loading...</p>
                                     </div>
-                                    {/* Render user list */}
-                                    {
-                                        users.map(user => (
-                                            <User key={user.id} id={user.id} deleteUser={deleteUser} updateUser={updateUser} user={user} />
-                                        ))
-                                    }
-                                </div>
-                            )
-                        }
-                    </ul>
+                                    </td>
+                                </tr>
+                                ) : error ? (
+                                <tr>
+                                    <td colSpan="4"> {/* Adjust colSpan as necessary */}
+                                    <div className='flex justify-center items-center gap-5'>
+                                        <p className='text-red-500'>{error}</p> {/* Display error message if there's an error */}
+                                    </div>
+                                    </td>
+                                </tr>
+                                ) : (
+                                    users.map(user => (
+                                        <UserTable key={user.id} user={user} deleteUser={deleteUser} updateUser={updateUser} addUser={addUser} />
+                                    ))
+                                )
+                            }
+                        </tbody>
+
+                    </table>
+                    
                 </div>
             </div>
         </div>
