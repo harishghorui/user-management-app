@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import User from './User';
 import AddUser from './AddUser';
 import UserTable from './UserTable';
 
